@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+
+
+
+{% block body %}
+    <h2>Active Listings</h2>
+
+    <ul style="list-style-type:none;">
+        {% for l in listing %} 
+            <div style="border: 1px solid lightgray; margin: 50px; padding: 20px; border-radius: 10px;">
+                <table style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td style="width:40px;">
+                                <img src="{{ l.image }}" style="width:80%;"/>
+                            </td>
+                            <td style="width: 60%;"  valign="top">
+                                <h5><a href="{% url 'listing' l.title %}" >{{ l.title }}</a></h5>
+                                <div><span style="font-weight: bold;">Current Bid</span>: ${{ l.price }}</div>
+                                <div><span style="font-weight: bold;">Listed by:</span> {{ l.user }}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        {% empty %}
+            <li>No active listings</li>
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+

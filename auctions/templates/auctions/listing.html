@@ -1,0 +1,70 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<table>
+    <tr>
+        <td>
+            <div>
+                <h1 style="text-decoration:underline ;">{{ title }}</h1>
+            <img src="{{ image }}" alt="{{ title }}" width=1000px" >
+            </div>
+        </td>
+        <td style="padding-left: 30px;">
+            <div style="font-weight:bold; font-size: 30px;">
+                current bid: ${{ price }}
+            </div>
+            
+            <form action="{% url 'bidding' id %}" method="post">
+                {% csrf_token %}
+                <input class="form-control form-group" type="number" placeholder="bid" name="bid">
+                <input class="btn btn-primary form-group" type="submit" value="Place Bid">
+            </form >
+            {% if watching.watching %}
+                <button class="btn btn-primary">Remove From Watchlist</button>
+            {% else %}
+                <button class="btn btn-primary">Add to Watchlist</button>
+            {% endif %}
+            
+
+        </td>
+    </tr>
+    <tr >
+        <td >
+            <ul style="padding: 50px; font-weight: bold;">
+                <h3 style="text-decoration: underline ;">Dedaitls</h3>
+                <li>
+                    Listed By: {{ user }}
+                </li>
+                <li>
+                    Category: {{ category }}
+                </li>
+                <li>
+                    Description: {{ description }}
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <form action="{% url 'listing' title %}" method="post">
+                    {% csrf_token %}
+                    <textarea name="comment" class="form-control form-group" type="text" placeholder="Add Comment"></textarea>
+                    <input class="btn btn-primary form-group" type="submit" value="Send">
+                </form>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {% for comment in commants %}
+            <div style="border: 1px solid lightgray; margin: 10px; padding: 10px; border-radius: 10px; width: 40%;">
+                {{ comment }}
+            </div>
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+
+
+{% endblock %}
